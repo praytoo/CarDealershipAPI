@@ -1,17 +1,29 @@
 package com.pluralsight.workshop9.models;
 
 public class Vehicle {
-    private int vin;
-    private int year;
+    private Integer vin;
+    private Integer year;
     private String make;
     private String model;
-    private String vehicleType; //car, truck, etc.
+    private String type; //car, truck, etc.
     private String color;
-    private int odometer;
-    private double price;
+    private Integer odometer;
+    private Integer price;
     private boolean sold;
 
-    public Vehicle(int vin) {
+    public void setOdometer(Integer odometer) {
+        this.odometer = odometer;
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
+    }
+
+    public Vehicle() {
     }
 
     @Override
@@ -21,49 +33,49 @@ public class Vehicle {
                 "year = " + year + "\n" +
                 "make = " + make + "\n" +
                 "model = " + model + "\n" +
-                "vehicleType = " + vehicleType + "\n" +
+                "vehicleType = " + type + "\n" +
                 "color = " + color + "\n" +
                 "odometer = " + odometer + "\n" +
                 "price = " + price + "\n" +
                 "sold = " + sold + "-------\n";
     }
 
-    public Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int odometer, double price, boolean sold) {
+    public Vehicle(Integer vin, Integer year, String make, String model, String type, String color, Integer odometer, Integer price, boolean sold) {
         this.vin = vin;
         this.year = year;
         this.make = make;
         this.model = model;
-        this.vehicleType = vehicleType;
+        this.type = type;
         this.color = color;
         this.odometer = odometer;
         this.price = price;
         this.sold = sold;
     }
 
-    public Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int odometer, double price) {
+    public Vehicle(Integer vin, Integer year, String make, String model, String type, String color, Integer odometer, Integer price) {
         this.vin = vin;
         this.year = year;
         this.make = make;
         this.model = model;
-        this.vehicleType = vehicleType;
+        this.type = type;
         this.color = color;
         this.odometer = odometer;
         this.price = price;
     }
 
-    public int getVin() {
+    public Integer getVin() {
         return vin;
     }
 
-    public void setVin(int vin) {
+    public void setVin(Integer vin) {
         this.vin = vin;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 
@@ -83,12 +95,12 @@ public class Vehicle {
         this.model = model;
     }
 
-    public String getVehicleType() {
-        return vehicleType;
+    public String getType() {
+        return type;
     }
 
-    public void setVehicleType(String vehicleType) {
-        this.vehicleType = vehicleType;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getColor() {
@@ -99,7 +111,7 @@ public class Vehicle {
         this.color = color;
     }
 
-    public int getOdometer() {
+    public Integer getOdometer() {
         return odometer;
     }
 
@@ -107,11 +119,11 @@ public class Vehicle {
         this.odometer = odometer;
     }
 
-    public double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

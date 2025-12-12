@@ -1,24 +1,23 @@
 package com.pluralsight.workshop9.daos;
 
-import com.pluralsight.inputManager.VehicleInput;
-import com.pluralsight.models.Cart;
+import com.pluralsight.workshop9.models.Cart;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartDao {
+public class CartDaoImpl {
     private static DataSource dataSource;
 
-    public CartDao(DataSource dataSource){
+    public CartDaoImpl(DataSource dataSource){
         this.dataSource = dataSource;
     }
-    public int addCart(){
+    public int addCart(Cart cart){
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO cart (VIN) VALUES (?);", Statement.RETURN_GENERATED_KEYS);) {
 
-            preparedStatement.setInt(1, VehicleInput.addVehicleToCart());
+            preparedStatement.setString(1, cart.toString());
 
             int rows = preparedStatement.executeUpdate();
 
@@ -36,11 +35,11 @@ public class CartDao {
         }
         return 1;
     }
-    public int deleteCart(){
+    public int deleteCart(Cart cart){
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM cart WHERE VIN = ?;")) {
 
-            preparedStatement.setInt(1, VehicleInput.deleteVehicleFromCart());
+            preparedStatement.setString(1, cart.toString());
 
             int rows = preparedStatement.executeUpdate();
 

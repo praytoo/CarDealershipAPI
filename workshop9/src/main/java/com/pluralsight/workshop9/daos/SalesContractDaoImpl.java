@@ -1,7 +1,6 @@
 package com.pluralsight.workshop9.daos;
 
-import com.pluralsight.inputManager.ContractsFileInput;
-import com.pluralsight.models.LeaseContract;
+import com.pluralsight.workshop9.models.SalesContract;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -9,22 +8,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeaseContractDao {
+public class SalesContractDaoImpl {
     private static DataSource dataSource;
 
-    public LeaseContractDao(DataSource dataSource){
+    public SalesContractDaoImpl(DataSource dataSource){
         this.dataSource = dataSource;
     }
 
-    public LeaseContractDao(int leaseId, int vin, Date date) {
-    }
-
-
-    public static int addLeaseContract() {
+    public static int addSalesContract(SalesContract salesContract) {
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO leaseContracts (VIN, Date) VALUES (?, ?);", Statement.RETURN_GENERATED_KEYS);) {
+             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO salesContracts (VIN, Date) VALUES (?, ?);", Statement.RETURN_GENERATED_KEYS);) {
 
-            preparedStatement.setString(1, ContractsFileInput.addLeaseContract());
+            preparedStatement.setString(1, salesContract.toString());
             preparedStatement.setDate(2, Date.valueOf(LocalDate.now()));
 
             int rows = preparedStatement.executeUpdate();
@@ -49,25 +44,25 @@ public class LeaseContractDao {
         }
         return -1;
     }
-    public List<LeaseContract> displayLeaseContract() {
-        List<LeaseContract> lContract = new ArrayList<>();
+    public List<SalesContract> displaySalesContract() {
+        List<SalesContract> sContract = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT leaseID, VIN, date FROM leasecontracts;");
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT salesID, VIN, date FROM salescontracts;");
 
              ResultSet resultSet = preparedStatement.executeQuery();) {
 
             while (resultSet.next()) {
-                int lease_id = resultSet.getInt("leaseID");
+                int sales_id = resultSet.getInt("salesID");
                 int vin = resultSet.getInt("vin");
                 Date date = resultSet.getDate("date");
 
-                LeaseContract leaseContract = new LeaseContract(lease_id, vin, date);
-                lContract.add(leaseContract);
+                SalesContract salesContract = new SalesContract(sales_id, vin, date);
+                sContract.add(salesContract);
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return lContract;
+        return sContract;
     }
 }
