@@ -27,7 +27,8 @@ public class SalesContractService {
         return salesContractDao.addSContract(salesContract);
     }
 
-    public SalesContract getSalesById(Integer id){
+    public SalesContract getSalesById(int id){
+
         return salesContractDao.getSalesById(id);
     }
 }

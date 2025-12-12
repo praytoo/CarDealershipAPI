@@ -54,14 +54,14 @@ public class SalesContractDaoImpl implements SalesContractDao{
     }
 
     @Override
-    public SalesContract getSalesById(Integer id) {
+    public SalesContract getSalesById(int id) {
         try (Connection connection = dataSource.getConnection();
                          PreparedStatement preparedStatement = connection.prepareStatement("SELECT salesID, VIN, date FROM salescontracts WHERE salesID = ?;");
         ) { preparedStatement.setInt(1, id);
 
             try(ResultSet resultSet = preparedStatement.executeQuery();) {
                 while (resultSet.next()) {
-                    SalesContract salesContract = new SalesContract(resultSet.getInt("salesID"), resultSet.getInt("vin"), resultSet.getDate("date"));
+                    return new SalesContract(resultSet.getInt("salesID"), resultSet.getInt("vin"), resultSet.getDate("date"));
                 }
             }
 

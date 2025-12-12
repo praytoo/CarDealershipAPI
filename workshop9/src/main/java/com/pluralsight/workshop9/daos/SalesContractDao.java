@@ -9,5 +9,5 @@ import java.util.List;
 public interface SalesContractDao {
     List<SalesContract> getAllSalesContracts(SalesContract salesContract);
     SalesContract addSContract(SalesContract salesContract);
-    SalesContract getSalesById(Integer id);
+    SalesContract getSalesById(int id);
 }

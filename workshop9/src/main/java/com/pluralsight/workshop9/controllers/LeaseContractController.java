@@ -20,13 +20,14 @@ public class LeaseContractController {
     public List<LeaseContract> getAllLeaseContracts(LeaseContract leaseContract) {
         return leaseContractService.getAllLeaseContracts(leaseContract);
     }
+    //http://localhost:8080/lease
     @PostMapping
     public LeaseContract addLContract(@RequestBody LeaseContract leaseContract){
         return leaseContractService.addLContract(leaseContract);
     }
     //http://localhost:8080/lease/id/4
     @GetMapping("/id/{id}")
-    public LeaseContract getLeaseById(@PathVariable Integer id){
+    public LeaseContract getLeaseById(@PathVariable int id){
         return leaseContractService.getLeaseById(id);
     }
 }

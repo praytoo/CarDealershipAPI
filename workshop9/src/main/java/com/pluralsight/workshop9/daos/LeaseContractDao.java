@@ -10,6 +10,5 @@ import java.util.List;
 public interface LeaseContractDao {
     List<LeaseContract> getAllLeaseContracts(LeaseContract leaseContract);
     LeaseContract addLContract(LeaseContract leaseContract);
-    LeaseContract getLeaseById(Integer id);
-
+    LeaseContract getLeaseById(int id);
 }

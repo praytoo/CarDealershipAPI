@@ -20,13 +20,15 @@ public class SalesContractController {
     public List<SalesContract> getAllSalesContracts(SalesContract salesContract) {
         return salesContractService.getAllSalesContracts(salesContract);
     }
+    //http://localhost:8080/sales
     @PostMapping
     public SalesContract addSContract(@RequestBody SalesContract salesContract){
         return salesContractService.addSContract(salesContract);
     }
     //http://localhost:8080/sales/id/7
     @GetMapping("/id/{id}")
-    public SalesContract getSalesById(@PathVariable Integer id){
+    public SalesContract getSalesById(@PathVariable int id){
+
         return salesContractService.getSalesById(id);
     }
 }

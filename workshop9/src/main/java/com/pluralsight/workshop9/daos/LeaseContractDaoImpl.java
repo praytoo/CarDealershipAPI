@@ -58,14 +58,14 @@ public class LeaseContractDaoImpl implements LeaseContractDao{
     }
 
     @Override
-    public LeaseContract getLeaseById(Integer id) {
+    public LeaseContract getLeaseById(int id) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT leaseID, VIN, date FROM leasecontracts WHERE leaseID = ?;");
         ) { preparedStatement.setInt(1, id);
 
             try(ResultSet resultSet = preparedStatement.executeQuery();) {
                 while (resultSet.next()) {
-                    LeaseContract leaseContract = new LeaseContract(resultSet.getInt("leaseID"), resultSet.getInt("vin"), resultSet.getDate("date"));
+                    return new LeaseContract(resultSet.getInt("leaseID"), resultSet.getInt("vin"), resultSet.getDate("date"));
                 }
             }
         } catch (SQLException e) {
