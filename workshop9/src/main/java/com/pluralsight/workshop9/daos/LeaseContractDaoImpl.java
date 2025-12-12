@@ -1,6 +1,7 @@
 package com.pluralsight.workshop9.daos;
 
 import com.pluralsight.workshop9.models.LeaseContract;
+import com.pluralsight.workshop9.models.SalesContract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -55,6 +56,24 @@ public class LeaseContractDaoImpl implements LeaseContractDao{
         }
         return leaseContract;
     }
+
+    @Override
+    public LeaseContract getLeaseById(Integer id) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT leaseID, VIN, date FROM leasecontracts WHERE leaseID = ?;");
+        ) { preparedStatement.setInt(1, id);
+
+            try(ResultSet resultSet = preparedStatement.executeQuery();) {
+                while (resultSet.next()) {
+                    LeaseContract leaseContract = new LeaseContract(resultSet.getInt("leaseID"), resultSet.getInt("vin"), resultSet.getDate("date"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
     public List<LeaseContract> getAllLeaseContracts(LeaseContract leaseContract) {
         List<LeaseContract> lContract = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();

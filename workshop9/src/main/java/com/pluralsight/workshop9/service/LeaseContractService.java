@@ -23,4 +23,7 @@ public class LeaseContractService {
     public LeaseContract addLContract(LeaseContract leaseContract){
         return leaseContractDao.addLContract(leaseContract);
     }
+    public LeaseContract getLeaseById(Integer id){
+        return leaseContractDao.getLeaseById(id);
+    }
 }

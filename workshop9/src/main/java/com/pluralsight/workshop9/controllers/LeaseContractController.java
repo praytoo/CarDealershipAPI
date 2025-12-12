@@ -24,4 +24,9 @@ public class LeaseContractController {
     public LeaseContract addLContract(@RequestBody LeaseContract leaseContract){
         return leaseContractService.addLContract(leaseContract);
     }
+    //http://localhost:8080/lease/id/4
+    @GetMapping("/id/{id}")
+    public LeaseContract getLeaseById(@PathVariable Integer id){
+        return leaseContractService.getLeaseById(id);
+    }
 }

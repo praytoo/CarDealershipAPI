@@ -24,4 +24,9 @@ public class SalesContractController {
     public SalesContract addSContract(@RequestBody SalesContract salesContract){
         return salesContractService.addSContract(salesContract);
     }
+    //http://localhost:8080/sales/id/7
+    @GetMapping("/id/{id}")
+    public SalesContract getSalesById(@PathVariable Integer id){
+        return salesContractService.getSalesById(id);
+    }
 }
