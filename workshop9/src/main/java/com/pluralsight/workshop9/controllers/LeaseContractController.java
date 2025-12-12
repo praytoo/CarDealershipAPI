@@ -3,6 +3,7 @@ package com.pluralsight.workshop9.controllers;
 import com.pluralsight.workshop9.models.LeaseContract;
 import com.pluralsight.workshop9.models.SalesContract;
 import com.pluralsight.workshop9.service.LeaseContractService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,11 @@ public class LeaseContractController {
     }
     //http://localhost:8080/lease/id/4
     @GetMapping("/id/{id}")
-    public LeaseContract getLeaseById(@PathVariable int id){
-        return leaseContractService.getLeaseById(id);
+    public ResponseEntity<LeaseContract> getLeaseById(@PathVariable int id){
+        LeaseContract leaseContract = leaseContractService.getLeaseById(id);
+        if (leaseContract == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(leaseContract);
     }
 }

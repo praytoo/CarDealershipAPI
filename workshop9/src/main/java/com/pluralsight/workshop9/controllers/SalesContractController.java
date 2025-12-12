@@ -3,6 +3,7 @@ package com.pluralsight.workshop9.controllers;
 import com.pluralsight.workshop9.models.SalesContract;
 import com.pluralsight.workshop9.models.Vehicle;
 import com.pluralsight.workshop9.service.SalesContractService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,8 +28,11 @@ public class SalesContractController {
     }
     //http://localhost:8080/sales/id/7
     @GetMapping("/id/{id}")
-    public SalesContract getSalesById(@PathVariable int id){
-
-        return salesContractService.getSalesById(id);
+    public ResponseEntity<SalesContract> getSalesById(@PathVariable int id){
+        SalesContract salesContract = salesContractService.getSalesById(id);
+        if (salesContract == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(salesContract);
     }
 }
