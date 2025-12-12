@@ -9,7 +9,7 @@ import java.util.List;
 public interface VehicleDao {
     Vehicle vehicleAdd(Vehicle vehicle);
     void updateVehicle(Integer vin, Vehicle vehicle);
-    //int vehicleDelete();
+    void deleteVehicle(Integer vin);
     //List<Vehicle> searchByPriceRange();
     //List<Vehicle> searchByMakeModel();
     //List<Vehicle> searchByYearRange();

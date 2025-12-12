@@ -27,4 +27,8 @@ public class VehicleController {
     public void updateVehicle(@PathVariable Integer vin, @RequestBody Vehicle vehicle){
         vehicleService.updateVehicle(vin, vehicle);
     }
+    @DeleteMapping("{vin}")
+    public void deleteVehicle(@PathVariable Integer vin){
+        vehicleService.deleteVehicle(vin);
+    }
 }

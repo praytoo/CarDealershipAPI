@@ -73,11 +73,12 @@ public class VehicleDaoImpl implements VehicleDao{
         }
     }
 
-    /*
     @Override
-    public int vehicleDelete() {
+    public void deleteVehicle(Integer vin) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM vehicles WHERE VIN = ?;")) {
+
+            preparedStatement.setInt(1, vin);
 
             int rows = preparedStatement.executeUpdate();
 
@@ -86,9 +87,7 @@ public class VehicleDaoImpl implements VehicleDao{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return 1;
     }
-    */
 
     @Override
     public List<Vehicle> getAllVehicles(Integer minPrice, Integer maxPrice, String make2, String model2, Integer minYear, Integer maxYear, String color2, Integer minMiles, Integer maxMiles, String type2) {
