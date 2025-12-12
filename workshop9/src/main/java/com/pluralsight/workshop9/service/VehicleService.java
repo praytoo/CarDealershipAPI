@@ -15,32 +15,6 @@ public class VehicleService {
         this.vehicleDao = vehicleDao;
     }
 
-/*    public int vehicleAdd(){
-        return vehicleDao.vehicleAdd();
-    }
-    public int vehicleDelete(){
-        return vehicleDao.vehicleDelete();
-    }
-    public List<Vehicle> searchByPriceRange(){
-        return vehicleDao.searchByPriceRange();
-    }
-    public List<Vehicle> searchByMakeModel(){
-        return vehicleDao.searchByMakeModel();
-    }
-    public List<Vehicle> searchByYearRange(){
-        return vehicleDao.searchByYearRange();
-    }
-    public List<Vehicle> searchByColor(){
-        return vehicleDao.searchByColor();
-    }
-    public List<Vehicle> searchByMileageRange(){
-        return vehicleDao.searchByMileageRange();
-    }
-    public List<Vehicle> searchByType(){
-        return vehicleDao.searchByType();
-    }
- */
-
     @Bean
     public boolean vehicles(){
         return false;

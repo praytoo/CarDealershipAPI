@@ -1,6 +1,9 @@
 package com.pluralsight.workshop9.daos;
 
 import com.pluralsight.workshop9.models.LeaseContract;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -8,9 +11,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeaseContractDaoImpl {
-    private static DataSource dataSource;
+@Component
+public class LeaseContractDaoImpl implements LeaseContractDao{
+    private DataSource dataSource;
 
+    public LeaseContractDaoImpl() {
+    }
+
+    @Autowired
     public LeaseContractDaoImpl(DataSource dataSource){
         this.dataSource = dataSource;
     }
@@ -19,11 +27,11 @@ public class LeaseContractDaoImpl {
     }
 
 
-    public int addLeaseContract(LeaseContract leaseContract) {
+    public LeaseContract addLContract(LeaseContract leaseContract) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO leaseContracts (VIN, Date) VALUES (?, ?);", Statement.RETURN_GENERATED_KEYS);) {
 
-            preparedStatement.setString(1, leaseContract.toString());
+            preparedStatement.setInt(1, leaseContract.getVIN());
             preparedStatement.setDate(2, Date.valueOf(LocalDate.now()));
 
             int rows = preparedStatement.executeUpdate();
@@ -36,7 +44,6 @@ public class LeaseContractDaoImpl {
                 while (keys.next()) {
                     results = true;
                     System.out.println("Keys added: " + keys.getInt(1));
-                    return keys.getInt(1);
                 }if (!results){
                     System.out.println("No results were found");
                 }
@@ -46,9 +53,9 @@ public class LeaseContractDaoImpl {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return -1;
+        return leaseContract;
     }
-    public List<LeaseContract> displayLeaseContract() {
+    public List<LeaseContract> getAllLeaseContracts(LeaseContract leaseContract) {
         List<LeaseContract> lContract = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT leaseID, VIN, date FROM leasecontracts;");
@@ -60,8 +67,8 @@ public class LeaseContractDaoImpl {
                 int vin = resultSet.getInt("vin");
                 Date date = resultSet.getDate("date");
 
-                LeaseContract leaseContract = new LeaseContract(lease_id, vin, date);
-                lContract.add(leaseContract);
+                LeaseContract leaseContract2 = new LeaseContract(lease_id, vin, date);
+                lContract.add(leaseContract2);
             }
 
         } catch (SQLException e) {
