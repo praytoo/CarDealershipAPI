@@ -8,6 +8,7 @@ import java.util.List;
 @Component
 public interface VehicleDao {
     Vehicle vehicleAdd(Vehicle vehicle);
+    void updateVehicle(Integer vin, Vehicle vehicle);
     //int vehicleDelete();
     //List<Vehicle> searchByPriceRange();
     //List<Vehicle> searchByMakeModel();

@@ -23,4 +23,8 @@ public class VehicleController {
     public Vehicle addVehicle(@RequestBody Vehicle vehicle){
         return vehicleService.vehicleAdd(vehicle);
     }
+    @PutMapping("{vin}")
+    public void updateVehicle(@PathVariable Integer vin, @RequestBody Vehicle vehicle){
+        vehicleService.updateVehicle(vin, vehicle);
+    }
 }

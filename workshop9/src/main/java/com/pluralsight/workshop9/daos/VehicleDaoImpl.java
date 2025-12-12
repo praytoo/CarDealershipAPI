@@ -48,6 +48,31 @@ public class VehicleDaoImpl implements VehicleDao{
         return null;
     }
 
+    @Override
+    public void updateVehicle(Integer vin, Vehicle vehicle) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE vehicles SET Sold = ?, color = ?, make = ?, model = ?, price = ?, year = ?, mileage = ?, type = ?" + "WHERE VIN = ?;")) {
+
+            preparedStatement.setBoolean(1, vehicle.isSold());
+            preparedStatement.setString(2, vehicle.getColor());
+            preparedStatement.setString(3, vehicle.getMake());
+            preparedStatement.setString(4, vehicle.getModel());
+            preparedStatement.setInt(5, vehicle.getPrice());
+            preparedStatement.setInt(6, vehicle.getYear());
+            preparedStatement.setInt(7, vehicle.getOdometer());
+            preparedStatement.setString(8, vehicle.getType());
+            preparedStatement.setInt(9, vehicle.getVin());
+
+
+            int rows = preparedStatement.executeUpdate();
+
+            System.out.println("Rows updated: " + rows);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /*
     @Override
     public int vehicleDelete() {
@@ -62,185 +87,6 @@ public class VehicleDaoImpl implements VehicleDao{
             throw new RuntimeException(e);
         }
         return 1;
-    }
-
-    @Override
-    public List<Vehicle> searchByPriceRange() {
-        List<Vehicle> vehicles = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM vehicles WHERE price BETWEEN ? AND ?;");
-             ) {
-
-            try(ResultSet resultSet = preparedStatement.executeQuery();) {
-
-                while (resultSet.next()) {
-                    int vin = resultSet.getInt("VIN");
-                    boolean sold = resultSet.getBoolean("Sold");
-                    String color = resultSet.getString("color");
-                    String make = resultSet.getString("make");
-                    String model = resultSet.getString("model");
-                    double price = resultSet.getDouble("price");
-                    int year = resultSet.getInt("year");
-                    int mileage = resultSet.getInt("mileage");
-                    String type = resultSet.getString("type");
-
-                    Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, mileage, price, sold);
-                    vehicles.add(vehicle);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return vehicles;
-    }
-
-    @Override
-    public List<Vehicle> searchByMakeModel() {
-        List<Vehicle> vehicles = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM vehicles WHERE make = ? AND model = ?;");) {
-
-            try (ResultSet resultSet = preparedStatement.executeQuery();) {
-
-                while (resultSet.next()) {
-                    int vin = resultSet.getInt("VIN");
-                    boolean sold = resultSet.getBoolean("Sold");
-                    String color = resultSet.getString("color");
-                    String make = resultSet.getString("make");
-                    String model = resultSet.getString("model");
-                    double price = resultSet.getDouble("price");
-                    int year = resultSet.getInt("year");
-                    int mileage = resultSet.getInt("mileage");
-                    String type = resultSet.getString("type");
-
-                    Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, mileage, price, sold);
-                    vehicles.add(vehicle);
-                }
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return vehicles;
-    }
-
-    @Override
-    public List<Vehicle> searchByYearRange() {
-        List<Vehicle> vehicles = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM vehicles WHERE year BETWEEN ? AND ?;");) {
-
-            try(ResultSet resultSet = preparedStatement.executeQuery();) {
-
-                while (resultSet.next()) {
-                    int vin = resultSet.getInt("VIN");
-                    boolean sold = resultSet.getBoolean("Sold");
-                    String color = resultSet.getString("color");
-                    String make = resultSet.getString("make");
-                    String model = resultSet.getString("model");
-                    double price = resultSet.getDouble("price");
-                    int year = resultSet.getInt("year");
-                    int mileage = resultSet.getInt("mileage");
-                    String type = resultSet.getString("type");
-
-                    Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, mileage, price, sold);
-                    vehicles.add(vehicle);
-                }
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return vehicles;
-    }
-
-    @Override
-    public List<Vehicle> searchByColor() {
-        List<Vehicle> vehicles = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM vehicles WHERE color = ?;");) {
-
-            try(ResultSet resultSet = preparedStatement.executeQuery();) {
-
-                while (resultSet.next()) {
-                    int vin = resultSet.getInt("VIN");
-                    boolean sold = resultSet.getBoolean("Sold");
-                    String color = resultSet.getString("color");
-                    String make = resultSet.getString("make");
-                    String model = resultSet.getString("model");
-                    double price = resultSet.getDouble("price");
-                    int year = resultSet.getInt("year");
-                    int mileage = resultSet.getInt("mileage");
-                    String type = resultSet.getString("type");
-
-                    Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, mileage, price, sold);
-                    vehicles.add(vehicle);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return vehicles;
-    }
-
-    @Override
-    public List<Vehicle> searchByMileageRange() {
-        List<Vehicle> vehicles = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM vehicles WHERE mileage BETWEEN ? AND ?;");) {
-
-            try(ResultSet resultSet = preparedStatement.executeQuery();) {
-
-                while (resultSet.next()) {
-                    int vin = resultSet.getInt("VIN");
-                    boolean sold = resultSet.getBoolean("Sold");
-                    String color = resultSet.getString("color");
-                    String make = resultSet.getString("make");
-                    String model = resultSet.getString("model");
-                    double price = resultSet.getDouble("price");
-                    int year = resultSet.getInt("year");
-                    int mileage = resultSet.getInt("mileage");
-                    String type = resultSet.getString("type");
-
-                    Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, mileage, price, sold);
-                    vehicles.add(vehicle);
-                }
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return vehicles;
-    }
-
-    @Override
-    public List<Vehicle> searchByType() {
-        List<Vehicle> vehicles = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM vehicles WHERE type = ?;");) {
-
-            try(ResultSet resultSet = preparedStatement.executeQuery();) {
-
-                while (resultSet.next()) {
-                    int vin = resultSet.getInt("VIN");
-                    boolean sold = resultSet.getBoolean("Sold");
-                    String color = resultSet.getString("color");
-                    String make = resultSet.getString("make");
-                    String model = resultSet.getString("model");
-                    double price = resultSet.getDouble("price");
-                    int year = resultSet.getInt("year");
-                    int mileage = resultSet.getInt("mileage");
-                    String type = resultSet.getString("type");
-
-                    Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, mileage, price, sold);
-                    vehicles.add(vehicle);
-                }
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return vehicles;
     }
     */
 

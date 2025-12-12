@@ -53,11 +53,12 @@ public class VehicleService {
     public String vehicles2(){
         return "Range Rover";
     }
-
     public Vehicle vehicleAdd(Vehicle vehicle){
         return vehicleDao.vehicleAdd(vehicle);
     }
-
+    public void updateVehicle(Integer vin, Vehicle vehicle){
+        vehicleDao.updateVehicle(vin, vehicle);
+    }
     @Bean
     public List<Vehicle> getAllVehicles(Integer minPrice, Integer maxPrice, String make2, String model2, Integer minYear, Integer maxYear, String color2, Integer minMiles, Integer maxMiles, String type2){
         return vehicleDao.getAllVehicles (minPrice, maxPrice, make2, model2, minYear, maxYear, color2, minMiles, maxMiles, type2);
